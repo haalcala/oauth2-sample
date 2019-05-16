@@ -1,19 +1,77 @@
 <!DOCTYPE html>
-<html>
-	<body>
-		<div>
-			<a
-				href="https://github.com/login/oauth/authorize?client_id=1c57e5814fa63a36ceb9&redirect_uri=http://localhost:8080/oauth/redirect"
-			>
-				Login with github
-			</a>
-		</div>
-		<div>
-			<a
-				href="https://61276586.ngrok.io/authorize.html?client_id=1c57e5814fa63a36ceb9&redirect_uri=http://localhost:8080/oauth/redirect"
-			>
-				Login with Online Account Web
-			</a>
-		</div>
-	</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login</title>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css.css" />
+  </head>
+  <body>
+    <script>
+      $(document).ready(function() {
+        function GetURLParameter(sParam) {
+          var sPageURL = window.location.search.substring(1);
+          var sURLVariables = sPageURL.split("&");
+          for (var i = 0; i < sURLVariables.length; i++) {
+            var sParameterName = sURLVariables[i].split("=");
+            if (sParameterName[0] == sParam) {
+              return sParameterName[1];
+            }
+          }
+        }
+        /** $("#submit").click(async () => {
+      				const resp = await fetch("/authorize", {
+      					method: "POST", // *GET, POST, PUT, DELETE, etc.
+      					mode: "cors", // no-cors, cors, *same-origin
+      					cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      					credentials: "same-origin", // include, *same-origin, omit
+      					headers: {
+      						"Content-Type": "application/json"
+      						// "Content-Type": "application/x-www-form-urlencoded",
+      					},
+      					redirect: "follow", // manual, *follow, error
+      					referrer: "no-referrer", // no-referrer, *client
+      					body: JSON.stringify({
+      						username: $("#username").val(),
+      						password: $("#password").val(),
+      						redirect_uri: decodeURIComponent(GetURLParameter("redirect_uri"))
+      					}) // body data type must match "Content-Type" header
+      				});
+
+      				console.log("resp:", resp);
+      			}); */
+
+        $("#githubLogin").click(async () => {
+          window.location.assign(
+            "https://github.com/login/oauth/authorize?client_id=1c57e5814fa63a36ceb9&redirect_uri=" +
+              window.location.protocol +
+              "//" +
+              window.location.hostname +
+              (window.location.port ? ":" + window.location.port : "") +
+              "/oauth/redirect"
+          );
+        });
+
+        const redirect_uri = decodeURIComponent(GetURLParameter("redirect_uri"));
+
+        $("#redirect_uri").val(redirect_uri + (redirect_uri.indexOf("?") >= 0 ? "&" : "?") + "state=" + GetURLParameter("state"));
+
+        $("#grant_type").val(GetURLParameter("response_type"));
+        $("#client_id").val(GetURLParameter("client_id"));
+      });
+    </script>
+    <div>
+      <button id="githubLogin">Login With GitHub</button>
+    </div>
+    <div>
+      <a href="https://61276586.ngrok.io/authorize.html?client_id=1c57e5814fa63a36ceb9&redirect_uri=http://localhost:8080/oauth/redirect">
+        Login with Online Account Web
+      </a>
+    </div>
+  </body>
 </html>

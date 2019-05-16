@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login</title>
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Hello</title>
-</head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-<body>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css.css" />
+  </head>
 
-</body>
-<script>
-	// We can get the token from the "access_token" query
-	// param, available in the browsers "location" global
-	const query = window.location.search.substring(1)
-	const token = query.split('access_token=')[1]
+  <body></body>
+  <script>
+    // We can get the token from the "access_token" query
+    // param, available in the browsers "location" global
+    const query = window.location.search.substring(1);
+    const token = query.split("access_token=")[1];
 
-	// Call the user info API using the fetch browser library
-	fetch('//api.github.com/user', {
-			headers: {
-				// Include the token in the Authorization header
-				Authorization: 'token ' + token
-			}
-		})
-		// Parse the response as JSON
-		.then(res => res.json())
-		.then(res => {
-			// Once we get the response (which has many fields)
-			// Documented here: https://developer.github.com/v3/users/#get-the-authenticated-user
-			// Write "Welcome <user name>" to the documents body
-			
-			const nameNode = document.createTextNode(`Welcome, ${res.name}`);
+    // Call the user info API using the fetch browser library
+    fetch("//api.github.com/user", {
+      headers: {
+        // Include the token in the Authorization header
+        Authorization: "token " + token
+      }
+    })
+      // Parse the response as JSON
+      .then(res => res.json())
+      .then(res => {
+        // Once we get the response (which has many fields)
+        // Documented here: https://developer.github.com/v3/users/#get-the-authenticated-user
+        // Write "Welcome <user name>" to the documents body
 
-			document.body.appendChild(nameNode);
-		})
-</script>
+        const nameNode = document.createTextNode(`Welcome, ${res.name}`);
 
+        document.body.appendChild(nameNode);
+      });
+  </script>
 </html>
-

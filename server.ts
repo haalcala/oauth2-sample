@@ -8,8 +8,8 @@ import bodyParser from "body-parser";
 
 // This is the client ID and client secret that you obtained
 // while registering the application
-const clientID = "1c57e5814fa63a36ceb9";
-const clientSecret = "4b756cede2edc236907330a495b046b3bb319d10";
+const clientID = process.env.GITHUB_CLIENT_ID;
+const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 
 const app = express();
 
@@ -45,6 +45,6 @@ app.get("/oauth/redirect", (req, res) => {
   });
 });
 
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 4002);
 
 console.log("Now listening on port 8080");
