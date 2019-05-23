@@ -58,8 +58,9 @@ app.get("/oauth/redirect", async (req, res) => {
 		url: token_url,
 		// Set the content type header, so that we get the response in JSOn
 		headers: {
-			accept: "application/json"
-			// authorization: "Bearer " + requestToken
+			accept: "application/json",
+			// authorization: "Bearer " + requestToken,
+			referer: req.headers.referer
 		},
 		json
 	};
@@ -75,7 +76,7 @@ app.get("/oauth/redirect", async (req, res) => {
 		const accessToken = (resp.data || resp.body).access_token;
 		// redirect the user to the welcome page, along with the access token
 
-		res.redirect(`/welcome.html?access_token=${accessToken}&user_url=${user_url}`);
+		res.redirect(`/welcome.html?user_url=${user_url}&access_token=${accessToken}`);
 	});
 });
 

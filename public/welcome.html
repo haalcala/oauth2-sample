@@ -36,7 +36,7 @@
 		fetch(user_url, {
 			headers: {
 				// Include the token in the Authorization header
-				Authorization: "token " + token
+				Authorization: "Bearer " + token
 			}
 		})
 			// Parse the response as JSON
@@ -46,7 +46,7 @@
 				// Documented here: https://developer.github.com/v3/users/#get-the-authenticated-user
 				// Write "Welcome <user name>" to the documents body
 
-				const nameNode = document.createTextNode(`Welcome, ${res.name}`);
+				const nameNode = document.createTextNode(`Welcome, ${res.name || res.userId}`);
 
 				document.body.appendChild(nameNode);
 			});
